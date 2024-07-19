@@ -70,7 +70,6 @@ class Helper:
             "KOTAKBANK",
             "LTIM",
             "LT",
-            "M&M",
             "MARUTI",
             "NTPC",
             "NESTLEIND",
@@ -90,6 +89,44 @@ class Helper:
             "ULTRACEMCO",
             "WIPRO"
         ]
+
+    # nifty50 = ["ADANIENT",
+    #         "ADANIPORTS",
+    #         "APOLLOHOSP",
+    #         "ASIANPAINT",
+    #         "AXISBANK",
+    #         "BAJAJ-AUTO",
+    #         "BAJFINANCE",
+    #         "BAJAJFINSV",
+    #         "BPCL",
+    #         "BHARTIARTL",
+    #         "BRITANNIA",
+    #         "CIPLA",
+    #         "COALINDIA",
+    #         "EICHERMOT",
+    #         "HCLTECH",
+    #         "HDFCBANK",
+    #         "HEROMOTOCO",
+    #         "HINDALCO",
+    #         "HINDUNILVR",
+    #         "ICICIBANK",
+    #         "ITC",
+    #         "INDUSINDBK",
+    #         "KOTAKBANK",
+    #         "MARUTI",
+    #         "NTPC",
+    #         "NESTLEIND",
+    #         "ONGC",
+    #         "RELIANCE",
+    #         "SBIN",
+    #         "SUNPHARMA",
+    #         "TCS",
+    #         "TATAMOTORS",
+    #         "TATASTEEL",
+    #         "TECHM",
+    #         "TITAN",
+    #         "WIPRO"
+    #     ]
 
     @staticmethod
     def fetch_data_from_nse(payload):
@@ -321,19 +358,20 @@ class NSEEquitiesData(Helper):
 
     def security_wise_archive(self, start_date, end_date, series="ALL"):
         payload_all = []
-        self.nifty50.remove('M&M')
         for symbol in self.nifty50:
             base_url = "https://www.nseindia.com/api/historical/securityArchives"
             customized_request_url = f"{base_url}?from={start_date}&to={end_date}&symbol={symbol.upper()}&dataType=priceVolumeDeliverable&series={series.upper()}"
             response = self.fetch_data_from_nse(customized_request_url)
 
             payload = response.get("data", [])
-            payload_all.append(payload)
 
             if not payload:
                 raise HTTPException(
                     status_code=404, detail=f"No data found for the specified parameters."
                 )
+
+            
+            payload_all.append(payload)
 
         tmp_lst = []
         for i in range(len(payload_all)):
@@ -519,11 +557,8 @@ if __name__ == "__main__":
         3) block_deals_archives -- Done
         4) short_selling_archives -- Done
         5) monthly_advances_declines -- Done
-        6) equity_tickers_list -- Done
         7) board_meetings -- Done
         8) index_ratios -- Done
-        9) index_symbols -- Done
-
     """
 
     print("Script started...")
@@ -545,9 +580,9 @@ if __name__ == "__main__":
     # ticker_csv.to_csv("nse_ticker.csv", index=False)
 
     print("[INFO] Fetching security archives...")
-    sec_archives = equitiesClass.get_security_wise_archive("16-07-2024", "16-07-2024", "ALL")
+    sec_archives = equitiesClass.get_security_wise_archive("18-07-2024", "18-07-2024", "ALL")
+    #sec_archives.to_csv(f"sec_arch.csv", index=False)
     sec_archives.to_csv(f"sec_arch_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
-    
     print("[INFO] Fetching bulk deals archives...")
     bulk_deals_archives = equitiesClass.get_bulk_deals_archives('16-07-2024', '16-07-2024')
     bulk_deals_archives.to_csv(f"bulk_deals_arch_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
