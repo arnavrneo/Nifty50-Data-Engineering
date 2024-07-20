@@ -4,3 +4,4 @@ venv/
 *.terraform.lock.hcl
 python/
 files/
+processed/

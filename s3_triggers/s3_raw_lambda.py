@@ -56,7 +56,7 @@ def download_dir(prefix, local, bucket, client=s3):
         
 
 def pandas_preprocess():
-    sec_arch = pd.read_csv("/tmp/secarch/sec_arch.csv")
+    sec_arch = pd.read_csv("/tmp/secarch/sec_archives.csv")
     block_deals_arch = pd.read_csv("/tmp/blockdealarch/block_deals_archives.csv")
     bulk_deals_arch = pd.read_csv("/tmp/bulkdealarch/bulk_deals_archives.csv")
     monthly_adv_dec = pd.read_csv("/tmp/monthlyadvdec/monthly_adv_declines.csv")
@@ -110,6 +110,12 @@ def lambda_handler(event, context):
             s3.upload_file(file_loc, dest_bucket, prefix+processed_file, ExtraArgs={'ServerSideEncryption': "AES256"})
             #s3.upload_file(f'/tmp/secarch/{os.listdir('/tmp/secarch/')[0]}', dest_bucket, prefix+os.listdir('/tmp/secarch/')[0], ExtraArgs={'ServerSideEncryption': "AES256"})
         print(f"File uploaded to {dest_bucket}...")
+
+        # Uploading .ok for the lambda trigger for analytics bucket
+        with open('/tmp/.ok', mode='a'): 
+            pass
+        s3.upload_file('/tmp/.ok', dest_bucket, '.ok', ExtraArgs={'ServerSideEncryption': "AES256"})
+        # In the end, upload .ok file for the next lambda to run
     except Exception as e:
         print(e)
         print('Error getting object {} from bucket {}. Make sure they exist and your bucket is in the same region as this function.'.format(key, bucket))
