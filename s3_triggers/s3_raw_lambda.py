@@ -64,7 +64,7 @@ def pandas_preprocess():
     short_selling_arch = pd.read_csv("/tmp/shortsellarch/short_selling_archives.csv")
     board_meetings = pd.read_csv("/tmp/boardmeetings/board_meetings.csv")
 
-    sec_arch = sec_arch.drop(["_id", "__v", "CH_MARKET_TYPE", "CH_SERIES", "TIMESTAMP", "CH_ISIN", "COP_DELIV_QTY", "COP_DELIV_PERC", "VWAP", "mTIMESTAMP", "createdAt", "updatedAt"], axis=1)
+    sec_arch = sec_arch.drop(["_id", "__v", "CH_MARKET_TYPE", "CH_SERIES", "TIMESTAMP", "CH_ISIN", "COP_DELIV_QTY", "COP_DELIV_PERC", "VWAP", "mTIMESTAMP", "createdAt", "updatedAt", "CH_TOTAL_TRADES"], axis=1)
     block_deals_arch = block_deals_arch.drop(["_id", "createdAt", "updatedAt", "mTIMESTAMP", "__v", "TIMESTAMP"], axis=1)
     bulk_deals_arch = bulk_deals_arch.drop(['_id', 'BD_REMARKS', 'TIMESTAMP', 'createdAt', 'updatedAt', '__v', 'mTIMESTAMP'], axis=1)
     monthly_adv_dec = monthly_adv_dec.drop(['_id', 'TIMESTAMP', 'ADM_MONTH', 'ADM_REC_TY'], axis=1)
