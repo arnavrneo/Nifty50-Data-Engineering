@@ -79,8 +79,8 @@ def pandas_compress():
             'CH_PREVIOUS_CLS_PRICE': 'PREVIOUS_CLOSING_PRICE',
             'CH_TOT_TRADED_QTY': 'TOTAL_TRADING_QUANT',
             'CH_TOT_TRADED_VAL': 'TOTAL_TRADED_VAL_IN_CRORES',
-            'CH_52WEEK_HIGH_PRICE': '52WEEK_HIGH',
-            'CH_52WEEK_LOW_PRICE': '52WEEK_LOW'
+            'CH_52WEEK_HIGH_PRICE': 'HIGH_52WEEK',
+            'CH_52WEEK_LOW_PRICE': 'LOW_52WEEK'
             })
             
     block_deals_arch = block_deals_arch.rename(columns={
@@ -161,9 +161,9 @@ def lambda_handler(event, context):
         print(f"File uploaded to {dest_bucket}...")
 
         # Uploading .ok for the lambda trigger for analytics bucket
-        with open('/tmp/.ok', mode='a'): 
-            pass
-        s3.upload_file('/tmp/.ok', dest_bucket, '.ok', ExtraArgs={'ServerSideEncryption': "AES256"})
+        # with open('/tmp/.ok', mode='a'): 
+        #     pass
+        # s3.upload_file('/tmp/.ok', dest_bucket, '.ok', ExtraArgs={'ServerSideEncryption': "AES256"})
         # In the end, upload .ok file for the next lambda to run
     except Exception as e:
         print(e)

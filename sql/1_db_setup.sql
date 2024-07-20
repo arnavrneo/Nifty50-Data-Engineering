@@ -15,51 +15,50 @@
 
  -- Creating dev schema tables
  CREATE or REPLACE TABLE SEC_ARCHIVES (
-    CH_SYMBOL	varchar(30) NOT NULL,
-    CH_TIMESTAMP	date NOT NULL PRIMARY KEY,
-    CH_TRADE_HIGH_PRICE	float,
-    CH_TRADE_LOW_PRICE	float,
-    CH_OPENING_PRICE	float,
-    CH_CLOSING_PRICE	float,
-    CH_LAST_TRADED_PRICE	float,
-    CH_PREVIOUS_CLS_PRICE	float,
-    CH_TOT_TRADED_QTY	integer,
-    CH_TOT_TRADED_VAL	float,
-    CH_52WEEK_HIGH_PRICE	float,
-    CH_52WEEK_LOW_PRICE	float,
-    CH_TOTAL_TRADES integer
+    SYMBOL	varchar(255) NOT NULL,
+    TIMESTAMP	date NOT NULL PRIMARY KEY,
+    TRADE_HIGH_PRICE	float,
+    TRADE_LOW_PRICE	float,
+    TRADE_OPEN_PRICE	float,
+    TRADE_CLOSE_PRICE	float,
+    LAST_TRADED_PRICE	float,
+    PREVIOUS_CLOSING_PRICE	float,
+    TOTAL_TRADING_QUANT	integer,
+    TOTAL_TRADED_VAL_IN_CRORES	float,
+    HIGH_52WEEK	float,
+    LOW_52WEEK	float
  );
 
  CREATE or REPLACE TABLE BLOCK_DEALS (
-    BD_DT_DATE	date NOT NULL PRIMARY KEY,
-    BD_SYMBOL	varchar(30) NOT NULL,
-    BD_SCRIP_NAME	varchar(30),
-    BD_CLIENT_NAME	varchar(30),
-    BD_BUY_SELL	varchar(30),
-    BD_QTY_TRD	integer,
-    BD_TP_WATP  float
+    TIMESTAMP	date NOT NULL PRIMARY KEY,
+    SYMBOL	varchar(255) NOT NULL,
+    STOCK_NAME	varchar(255),
+    CLIENT_NAME	varchar(255),
+    BUY_SELL	varchar(255),
+    QTY_TRADED	integer,
+    TRADING_PRICE  float
  );
 
  CREATE or REPLACE TABLE BULK_DEALS (
-    BD_DT_DATE	date NOT NULL PRIMARY KEY,
-    BD_SYMBOL	varchar(30) NOT NULL,
-    BD_SCRIP_NAME	varchar(30),
-    BD_CLIENT_NAME	varchar(30),
-    BD_BUY_SELL	varchar(30),
-    BD_QTY_TRD	integer,
-    BD_TP_WATP  float
+    TIMESTAMP	date NOT NULL PRIMARY KEY,
+    SYMBOL	varchar(255) NOT NULL,
+    STOCK_NAME	varchar(255),
+    CLIENT_NAME	varchar(255),
+    BUY_SELL	varchar(255),
+    QTY_TRADED	integer,
+    TRADING_PRICE  float
  );
 
  CREATE or REPLACE TABLE MONTHLY_ADV_DEC (
-    ADM_MONTH_YEAR_STRING	date NOT NULL PRIMARY KEY,
-    ADM_ADVANCES	float,
-    ADM_ADV_DCLN_RATIO	float,
-    ADM_DECLINES    float
+    TIMESTAMP	date NOT NULL PRIMARY KEY,
+    ADVANCES	float,
+    ADV_DEC_RATIO	float,
+    DECLINES    float
  );
 
  CREATE or REPLACE TABLE NSE_RATIOS (
-    INDEX_NAME varchar(30) NOT NULL,	
-    HistoricalDate	date NOT NULL PRIMARY KEY,
+    INDEX_NAME varchar(255) NOT NULL,	
+    TIMESTAMP	date NOT NULL PRIMARY KEY,
     OPEN	float,
     HIGH	float,
     LOW     float,	
@@ -67,17 +66,22 @@
  );
 
  CREATE or REPLACE TABLE SHORT_SELL_ARCH (
-    SS_NAME varchar(30) NOT NULL,	
-    SS_SYMBOL	varchar(30),
-    SS_DATE	date NOT NULL PRIMARY KEY,
-    SS_QTY float
+    STOCK_NAME varchar(255) NOT NULL,	
+    SYMBOL	varchar(255),
+    TIMESTAMP	date NOT NULL PRIMARY KEY,
+    QTY_SHORT_SOLD float
  );
 
  CREATE or REPLACE TABLE BOARD_MEETINGS (
-    bm_symbol   varchar(30) NOT NULL,	
-    bm_date	    date NOT NULL PRIMARY KEY,
-    bm_purpose	varchar(255),
-    bm_desc	    varchar(255),
-    sm_indusrty	varchar(50),
-    sm_name     varchar(255)
+    SYMBOL   varchar(255) NOT NULL,	
+    TIMESTAMP	    date NOT NULL PRIMARY KEY,
+    PURPOSE	varchar(255),
+    DESC	    varchar(255),
+    INDUSTRY	varchar(255),
+    COMPANY_NAME     varchar(255)
  );
+
+ -- Using prod schema
+ -- USE SCHEMA prod;
+
+ 
