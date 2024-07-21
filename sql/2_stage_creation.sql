@@ -98,7 +98,6 @@ COPY INTO SEC_ARCHIVES FROM @stg_sec_archives ON_ERROR = continue;
 CREATE or REPLACE PIPE short_sell_arch_pipe AUTO_INGEST=true AS
 COPY INTO SHORT_SELL_ARCH FROM @stg_short_sell_arch ON_ERROR = continue;
 
--- Viewing the pipes
 SHOW pipes;
 
 -- truncate table block_deals;

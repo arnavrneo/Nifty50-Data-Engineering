@@ -582,7 +582,7 @@ if __name__ == "__main__":
 
     print("[INFO] Fetching security archives...")
     sec_archives = equitiesClass.get_security_wise_archive("18-07-2024", "18-07-2024", "ALL")
-    sec_archives.to_csv(f"sec_arch.csv", index=False)
+    sec_archives.to_csv(f"sec_archives.csv", index=False)
     #sec_archives.to_csv(f"sec_arch_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
     print("[INFO] Fetching bulk deals archives...")
     bulk_deals_archives = equitiesClass.get_bulk_deals_archives('16-07-2024', '16-07-2024')

@@ -6,13 +6,13 @@ print('Loading function...')
 
 s3 = boto3.client('s3')
 prefix_list = {
-        'secarch/': 'sec_arch_analytics.csv', 
-        'blockdealarch/': 'block_deals_arch_analytics.csv', 
+        'secarch/': 'sec_archives_analytics.csv', 
+        'blockdealarch/': 'block_deals_archives_analytics.csv', 
         'boardmeetings/': 'board_meetings_analytics.csv', 
-        'bulkdealarch/': 'bulk_deals_arch_analytics.csv',
+        'bulkdealarch/': 'bulk_deals_archives_analytics.csv',
         'indexratios/': 'nse_ratios_analytics.csv', 
         'monthlyadvdec/': 'monthly_adv_declines_analytics.csv', 
-        'shortsellarch/': 'short_selling_arch_analytics.csv'
+        'shortsellarch/': 'short_selling_archives_analytics.csv'
         }
 dest_bucket = 'niftyde-analytics'
 
@@ -56,12 +56,12 @@ def download_dir(prefix, local, bucket, client=s3):
         
 
 def pandas_compress():
-    sec_arch = pd.read_csv("/tmp/secarch/sec_arch_processed.csv")
-    block_deals_arch = pd.read_csv("/tmp/blockdealarch/block_deals_arch_processed.csv")
-    bulk_deals_arch = pd.read_csv("/tmp/bulkdealarch/bulk_deals_arch_processed.csv")
+    sec_arch = pd.read_csv("/tmp/secarch/sec_archives_processed.csv")
+    block_deals_arch = pd.read_csv("/tmp/blockdealarch/block_deals_archives_processed.csv")
+    bulk_deals_arch = pd.read_csv("/tmp/bulkdealarch/bulk_deals_archives_processed.csv")
     monthly_adv_dec = pd.read_csv("/tmp/monthlyadvdec/monthly_adv_declines_processed.csv")
     nse_ratios = pd.read_csv("/tmp/indexratios/nse_ratios_processed.csv")
-    short_selling_arch = pd.read_csv("/tmp/shortsellarch/short_selling_arch_processed.csv")
+    short_selling_arch = pd.read_csv("/tmp/shortsellarch/short_selling_archives_processed.csv")
     board_meetings = pd.read_csv("/tmp/boardmeetings/board_meetings_processed.csv")
     
     # adv processing for analytics
@@ -131,12 +131,12 @@ def pandas_compress():
             })
     
 
-    sec_arch.to_csv("/tmp/secarch/sec_arch_analytics.csv", index=False)
-    block_deals_arch.to_csv("/tmp/blockdealarch/block_deals_arch_analytics.csv", index=False)
-    bulk_deals_arch.to_csv("/tmp/bulkdealarch/bulk_deals_arch_analytics.csv", index=False)
+    sec_arch.to_csv("/tmp/secarch/sec_archives_analytics.csv", index=False)
+    block_deals_arch.to_csv("/tmp/blockdealarch/block_deals_archives_analytics.csv", index=False)
+    bulk_deals_arch.to_csv("/tmp/bulkdealarch/bulk_deals_archives_analytics.csv", index=False)
     monthly_adv_dec.to_csv("/tmp/monthlyadvdec/monthly_adv_declines_analytics.csv", index=False)
     nse_ratios.to_csv("/tmp/indexratios/nse_ratios_analytics.csv", index=False)
-    short_selling_arch.to_csv("/tmp/shortsellarch/short_selling_arch_analytics.csv", index=False)
+    short_selling_arch.to_csv("/tmp/shortsellarch/short_selling_archives_analytics.csv", index=False)
     board_meetings.to_csv("/tmp/boardmeetings/board_meetings_analytics.csv", index=False)
 
 

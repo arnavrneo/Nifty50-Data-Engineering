@@ -5,6 +5,7 @@ use schema prod;
 -- 1) Top 5 block deals
 CREATE or REPLACE VIEW prod.top_block_deals AS 
 select
+    timestamp,
     symbol,
     client_name,
     qty_traded,
@@ -12,10 +13,10 @@ select
     trading_price
 from dev.block_deals
 order by qty_traded DESC
-limit 5;
+limit 10;
 
 -- 2) Total buy and sell with max of each grouped by timestamp
-CREATE or REPLACE VIEW prod.total_buy_sell AS
+CREATE or REPLACE VIEW prod.total_block_buy_sell AS
 select
     timestamp,
     COUNT(CASE WHEN buy_sell = 'BUY' THEN buy_sell END) AS total_buy,
@@ -41,6 +42,7 @@ limit 10;
 -- 1) Top 5 bulk deals
 CREATE or REPLACE VIEW prod.top_bulk_deals AS
 select
+    timestamp,
     symbol,
     client_name,
     qty_traded,
@@ -48,10 +50,10 @@ select
     trading_price
 from dev.bulk_deals
 order by qty_traded DESC
-limit 5;
+limit 10;
 
 -- 2) Total buy and sell with max of each grouped by timestamp
-CREATE or REPLACE VIEW prod.max_buy_sell AS
+CREATE or REPLACE VIEW prod.max_bulk_buy_sell AS
 select
     timestamp,
     COUNT(CASE WHEN buy_sell = 'BUY' THEN buy_sell END) AS total_buy,

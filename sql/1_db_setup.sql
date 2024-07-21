@@ -80,8 +80,4 @@
     INDUSTRY	varchar(255),
     COMPANY_NAME     varchar(255)
  );
-
- -- Using prod schema
- -- USE SCHEMA prod;
-
  

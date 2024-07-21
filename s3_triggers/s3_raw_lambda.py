@@ -82,12 +82,12 @@ def pandas_preprocess():
     short_selling_arch['SS_DATE'] = pd.to_datetime(short_selling_arch['SS_DATE'])
     board_meetings['bm_date'] = pd.to_datetime(board_meetings['bm_date'])
 
-    sec_arch.to_csv("/tmp/secarch/sec_arch_processed.csv", index=False)
-    block_deals_arch.to_csv("/tmp/blockdealarch/block_deals_arch_processed.csv", index=False)
-    bulk_deals_arch.to_csv("/tmp/bulkdealarch/bulk_deals_arch_processed.csv", index=False)
+    sec_arch.to_csv("/tmp/secarch/sec_archives_processed.csv", index=False)
+    block_deals_arch.to_csv("/tmp/blockdealarch/block_deals_archives_processed.csv", index=False)
+    bulk_deals_arch.to_csv("/tmp/bulkdealarch/bulk_deals_archives_processed.csv", index=False)
     monthly_adv_dec.to_csv("/tmp/monthlyadvdec/monthly_adv_declines_processed.csv", index=False)
     nse_ratios.to_csv("/tmp/indexratios/nse_ratios_processed.csv", index=False)
-    short_selling_arch.to_csv("/tmp/shortsellarch/short_selling_arch_processed.csv", index=False)
+    short_selling_arch.to_csv("/tmp/shortsellarch/short_selling_archives_processed.csv", index=False)
     board_meetings.to_csv("/tmp/boardmeetings/board_meetings_processed.csv", index=False)
 
 
