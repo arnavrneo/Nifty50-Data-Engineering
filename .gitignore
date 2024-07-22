@@ -1,8 +1,8 @@
 venv/
 *.zip
 *.terraform/
-*terraform.tfstate
-*terraform.tfstate.backup
+tf/terraform.tfstate
+tf/terraform.tfstate.backup
 python/
 files/
 processed/
