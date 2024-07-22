@@ -324,7 +324,7 @@ st.subheader("Bulk Deals")
 st.caption(f"Updated: {bulk_deals['TIMESTAMP'][0]}")
 col1, col2 = st.columns([0.3, 0.7])
 with col2:
-    st.bar_chart(bulk_deals, x='CLIENT_NAME', y='QTY_TRADED', horizontal=False, x_label="Units Traded", y_label="Client", color='SYMBOL')
+    st.bar_chart(bulk_deals, x='CLIENT_NAME', y='QTY_TRADED', horizontal=True, x_label="Units Traded", y_label="Client", color='SYMBOL')
 
 with col1:
     st.markdown(f"<h4>Total Buy: <span style='color:green'>{bulk_total['TOTAL_BUY'].values[0]}</span> </h4>", unsafe_allow_html=True)
@@ -335,7 +335,7 @@ with col1:
 # Monthly adv dec
 
 st.subheader("Monthly Adv/Dec")
-
+st.caption(f"Updated: {max(monthly_adv_dec['TIMESTAMP'])}")
 c1 = alt.Chart(monthly_adv_dec).mark_line().encode(
     x='TIMESTAMP',
     y=alt.Y('ADVANCES', scale=alt.Scale(domain=[900,1800])),
@@ -354,31 +354,27 @@ c2 = alt.Chart(monthly_adv_dec).mark_line().encode(
     height=300
 )
 
-c = c1 + c2
+line_51 = c1.mark_line(color='#20d70c').encode(
+    alt.Y('ADVANCES:Q', scale=alt.Scale(domain=[900,1800])).axis(titleColor='#20d70c')
+)
 
-st.altair_chart(c, use_container_width=True)
+line_61 = c2.mark_line(color='#cb450c').encode(
+    alt.Y('DECLINES:Q', scale=alt.Scale(domain=[900,1800])).axis(titleColor='#cb450c')
+)
+
+c_y = alt.layer(line_51, line_61).resolve_scale(y='independent')
+
+st.altair_chart(c_y, use_container_width=True)
 
 # Short Sell
 st.subheader("Short Sold Stocks")
-a = alt.Chart(short_sell_arch).mark_rect().encode(
-    alt.X("TIMESTAMP").title("Date").axis(labelAngle=0),
-    alt.Y("SYMBOL:O").title("Stock"),
-    alt.Color("QTY_SHORT_SOLD", scale=alt.Scale(scheme='yellowgreenblue')).title(None),
-    tooltip=[
-        alt.Tooltip("QTY_SHORT_SOLD", title="Qty. Short Sold"),
-        alt.Tooltip("SYMBOL", title="Stock"),
-    ],
-).configure_view(
-    step=20,
-    strokeWidth=20
-).configure_axis(
-    domain=False
-)
-st.altair_chart(a, use_container_width=True)
+st.caption(f"Updated: {max(short_sell_arch['TIMESTAMP'])}")
+st.scatter_chart(short_sell_arch, x='TIMESTAMP', y='QTY_SHORT_SOLD', color='SYMBOL', x_label="Date", y_label="Qty. Short Sold")
 
 # NSE Ratios
 # 1) OPEN CLOSE
 st.subheader("Nifty50 Open/Close")
+st.caption(f"Updated: {max(nse_open_close['TIMESTAMP'])}")
 c3 = alt.Chart(nse_open_close).mark_line().encode(
     x='TIMESTAMP',
     y=alt.Y('OPEN', scale=alt.Scale(domain=[20000,26000])),
@@ -410,6 +406,7 @@ st.altair_chart(c_b, use_container_width=True)
 
 # 2) HIGH LOW
 st.subheader("Nifty50 High/Low")
+st.caption(f"Updated: {max(nse_high_low['TIMESTAMP'])}")
 c5 = alt.Chart(nse_high_low).mark_line().encode(
     x='TIMESTAMP',
     y=alt.Y('HIGH', scale=alt.Scale(domain=[20000,26000])),
