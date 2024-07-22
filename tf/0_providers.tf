@@ -1,12 +1,12 @@
 terraform {
   required_providers {
     aws = {
-        source = "hashicorp/aws"
+      source = "hashicorp/aws"
     }
   }
 }
 
 provider "aws" {
-    region = "us-east-1"
-    profile = "arnav-first-1"
+  region  = "us-east-1"
+  profile = "arnav-first-1"
 }

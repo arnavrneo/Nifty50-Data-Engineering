@@ -1,7 +1,9 @@
 venv/
 *.zip
 *.terraform/
-*.terraform.lock.hcl
+tf/terraform.tfstate
+tf/terraform.tfstate.backup
 python/
 files/
 processed/
+.streamlit/

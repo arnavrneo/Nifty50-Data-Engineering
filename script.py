@@ -39,56 +39,57 @@ class Helper:
         "Accept-Language": "en-US,en;q=0.9,hi;q=0.8",
     }
 
-    nifty50 = ["ADANIENT",
-            "ADANIPORTS",
-            "APOLLOHOSP",
-            "ASIANPAINT",
-            "AXISBANK",
-            "BAJAJ-AUTO",
-            "BAJFINANCE",
-            "BAJAJFINSV",
-            "BPCL",
-            "BHARTIARTL",
-            "BRITANNIA",
-            "CIPLA",
-            "COALINDIA",
-            "DIVISLAB",
-            "DRREDDY",
-            "EICHERMOT",
-            "GRASIM",
-            "HCLTECH",
-            "HDFCBANK",
-            "HDFCLIFE",
-            "HEROMOTOCO",
-            "HINDALCO",
-            "HINDUNILVR",
-            "ICICIBANK",
-            "ITC",
-            "INDUSINDBK",
-            "INFY",
-            "JSWSTEEL",
-            "KOTAKBANK",
-            "LTIM",
-            "LT",
-            "MARUTI",
-            "NTPC",
-            "NESTLEIND",
-            "ONGC",
-            "POWERGRID",
-            "RELIANCE",
-            "SBILIFE",
-            "SHRIRAMFIN",
-            "SBIN",
-            "SUNPHARMA",
-            "TCS",
-            "TATACONSUM",
-            "TATAMOTORS",
-            "TATASTEEL",
-            "TECHM",
-            "TITAN",
-            "ULTRACEMCO",
-            "WIPRO"
-        ]
+    nifty50 = [
+        "ADANIENT",
+        "ADANIPORTS",
+        "APOLLOHOSP",
+        "ASIANPAINT",
+        "AXISBANK",
+        "BAJAJ-AUTO",
+        "BAJFINANCE",
+        "BAJAJFINSV",
+        "BPCL",
+        "BHARTIARTL",
+        "BRITANNIA",
+        "CIPLA",
+        "COALINDIA",
+        "DIVISLAB",
+        "DRREDDY",
+        "EICHERMOT",
+        "GRASIM",
+        "HCLTECH",
+        "HDFCBANK",
+        "HDFCLIFE",
+        "HEROMOTOCO",
+        "HINDALCO",
+        "HINDUNILVR",
+        "ICICIBANK",
+        "ITC",
+        "INDUSINDBK",
+        "INFY",
+        "JSWSTEEL",
+        "KOTAKBANK",
+        "LTIM",
+        "LT",
+        "MARUTI",
+        "NTPC",
+        "NESTLEIND",
+        "ONGC",
+        "POWERGRID",
+        "RELIANCE",
+        "SBILIFE",
+        "SHRIRAMFIN",
+        "SBIN",
+        "SUNPHARMA",
+        "TCS",
+        "TATACONSUM",
+        "TATAMOTORS",
+        "TATASTEEL",
+        "TECHM",
+        "TITAN",
+        "ULTRACEMCO",
+        "WIPRO",
+    ]
 
     # nifty50 = ["ADANIENT",
     #         "ADANIPORTS",
@@ -359,6 +360,7 @@ class NSEEquitiesData(Helper):
     def security_wise_archive(self, start_date, end_date, series="ALL"):
         payload_all = []
         for symbol in self.nifty50:
+            print(symbol)
             base_url = "https://www.nseindia.com/api/historical/securityArchives"
             customized_request_url = f"{base_url}?from={start_date}&to={end_date}&symbol={symbol.upper()}&dataType=priceVolumeDeliverable&series={series.upper()}"
             response = self.fetch_data_from_nse(customized_request_url)
@@ -367,10 +369,10 @@ class NSEEquitiesData(Helper):
 
             if not payload:
                 raise HTTPException(
-                    status_code=404, detail=f"No data found for the specified parameters."
+                    status_code=404,
+                    detail=f"No data found for the specified parameters.",
                 )
 
-            
             payload_all.append(payload)
 
         tmp_lst = []
@@ -380,13 +382,9 @@ class NSEEquitiesData(Helper):
         sec_arch_csv = pd.DataFrame(tmp_lst)
         return sec_arch_csv
 
-    def get_security_wise_archive(
-        self, start_date: str, end_date: str, series: str
-    ):
+    def get_security_wise_archive(self, start_date: str, end_date: str, series: str):
         try:
-            historical_data = self.security_wise_archive(
-                start_date, end_date, series
-            )
+            historical_data = self.security_wise_archive(start_date, end_date, series)
             # processed_data = self.process_security_wise_archive_data(historical_data) #  For json
             return historical_data
         except Exception as e:
@@ -562,51 +560,51 @@ if __name__ == "__main__":
     """
 
     print("Script started...")
-    
+
     # NSE Indices
     indicesClass = NSEIndicesData()
-    # indices = indicesClass.get_nse_indices_symbols()
-    # indices.to_csv(f"nse_indices_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
-    # nifty50_indices = indicesClass.get_nifty_50_indices()
-    # nifty50_indices.to_csv("nifty50_indices.csv", index=False)
     print("[INFO] Fetching nifty50 index ratio...")
+    # history: multiple days
     ratios = indicesClass.get_nse_indices_ratios('Nifty 50', '12-May-2024', '12-Jul-2024', 'Nifty 50')
     ratios.to_csv(f"nse_ratios.csv", index=False)
-    #ratios.to_csv(f"nse_ratios_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
 
     # NSE Equities
     equitiesClass = NSEEquitiesData()
-    # tickers change occasionlly
-    # ticker_csv = equitiesClass.get_nse_equity_tickers()
-    # ticker_csv.to_csv("nse_ticker.csv", index=False)
 
     print("[INFO] Fetching security archives...")
+    # history: one day
     sec_archives = equitiesClass.get_security_wise_archive("18-07-2024", "18-07-2024", "ALL")
-    sec_archives.to_csv(f"sec_arch.csv", index=False)
+    sec_archives.to_csv(f"sec_archives.csv", index=False)
     #sec_archives.to_csv(f"sec_arch_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
+
     print("[INFO] Fetching bulk deals archives...")
-    bulk_deals_archives = equitiesClass.get_bulk_deals_archives('16-07-2024', '16-07-2024')
+    # history: one day
+    bulk_deals_archives = equitiesClass.get_bulk_deals_archives('12-07-2024', '12-07-2024')
     bulk_deals_archives.to_csv(f"bulk_deals_archives.csv", index=False)
     #bulk_deals_archives.to_csv(f"bulk_deals_arch_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
-    
+
     print("[INFO] Fetching block deals archives...")
+    # history: one day
     block_deals_archives = equitiesClass.get_block_deals_archives('16-07-2024', '16-07-2024')
     block_deals_archives.to_csv(f"block_deals_archives.csv", index=False)
     #block_deals_archives.to_csv(f"block_deals_arch_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
-    
+
     print("[INFO] Fetching short selling archives...")
-    short_selling_archives = equitiesClass.get_short_selling_archives('16-07-2024', '16-07-2024')
+    # history: multiple days
+    short_selling_archives = equitiesClass.get_short_selling_archives('12-06-2024', '12-07-2024')
     short_selling_archives.to_csv(f"short_selling_archives.csv", index=False)
     #short_selling_archives.to_csv(f"short_selling_arch_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
-    
+
     print("[INFO] Fetching monthly advances declines...")
     monthly_adv_declines = equitiesClass.get_nse_monthly_advances_and_declines('2024')
     monthly_adv_declines.to_csv(f"monthly_adv_declines.csv", index=False)
     #monthly_adv_declines.to_csv(f"monthly_adv_declines_{datetime.datetime.now().strftime('%Y')}.csv", index=False)
-    
+
     print("[INFO] Fetching board meetings...")
-    board_meetings = equitiesClass.get_board_meetings('16-07-2024', '16-07-2024')
+    # history: multiple days
+    board_meetings = equitiesClass.get_board_meetings('12-07-2024', '12-07-2024')
     board_meetings.to_csv(f"board_meetings.csv", index=False)
     #board_meetings.to_csv(f"board_meetings_{datetime.datetime.now().strftime('%d-%m-%Y')}.csv", index=False)
-    
-    print(f"Script completed...")
+
+    print("Download done...")
+    print("Script completed...")
