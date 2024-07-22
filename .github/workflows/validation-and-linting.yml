@@ -15,6 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install black
+        run: pip install black
+      
       - name: Install Terraform
         run: |
           sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
@@ -33,6 +36,10 @@ jobs:
       - name: Terraform Config Linting
         working-directory: tf/
         run: terraform fmt
+
+      - name: Format .py files
+        working-directory: .
+        run: black . -v
 
       
           
