@@ -32,7 +32,7 @@ st.markdown(
 
 # Overview
 st.subheader("Pipeline Overview")
-st.image("./pipeline-overview.png")
+st.image("pipeline-overview.png")
 
 
 # Board Meetings
