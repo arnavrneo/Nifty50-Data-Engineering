@@ -5,3 +5,4 @@ tf/terraform.tfstate.backup
 python/
 processed/
 .streamlit/
+ignores/

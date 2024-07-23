@@ -7,6 +7,6 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-1"
-  profile = "arnav-first-1"
+  region  = "<REGION>"
+  profile = "<AWS-PROFILE>"
 }
