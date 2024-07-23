@@ -30,6 +30,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# Overview
+st.subheader("Pipeline Overview")
+st.image("streamlit/pipeline-overview.png")
+
+
 # Board Meetings
 with st.expander(label="Upcoming/Past Board Meetings"):
     st.dataframe(
@@ -85,6 +90,8 @@ with col9:
 
 with col10:
     st.subheader("Price change")
+    with st.expander("About price change"):
+        st.write("Price change refers to the difference between a stock's closing price on a trading day and its closing price on the previous trading day.")
     st.caption(f"Updated: {sec_arch_cur_prev['TIMESTAMP'][0]}")
     st.bar_chart(
         sec_arch_cur_prev,
@@ -127,6 +134,8 @@ with col12:
 # Block Trades
 st.subheader("Block Deals")
 st.caption(f"Updated: {block_deals['TIMESTAMP'][0]}")
+with st.expander("About Block Deals"):
+    st.write("A block deal refers to a single transaction where the exchange of shares involves quantities exceeding Rs. 5,00,000 or cases where the total traded value exceeds Rs. 10 crores.")
 col1, col2 = st.columns([0.7, 0.3])
 with col1:
     st.bar_chart(
@@ -161,6 +170,9 @@ with col2:
 # Bulk Trades
 st.subheader("Bulk Deals")
 st.caption(f"Updated: {bulk_deals['TIMESTAMP'][0]}")
+with st.expander("About Bulk Deals"):
+    st.write("Bulk Deal refers to a transaction wherein a singular entity, such as an institutional investor or a notable trader, engages in the substantial buying or selling of a significant quantity of a company's shares within a single trade. ")
+
 col1, col2 = st.columns([0.3, 0.7])
 with col2:
     st.bar_chart(
@@ -195,6 +207,8 @@ with col1:
 
 st.subheader("Monthly Adv/Dec")
 st.caption(f"Updated: {max(monthly_adv_dec['TIMESTAMP'])}")
+with st.expander("About Monthly Advances and Declines"):
+    st.write("Advances and declines refers generally to the number of stocks (or other assets in a particular market) that closed at a higher and those that closed at a lower price than the previous day, respectively. They help in predicting whether a price trend is likely to continue or reverse.")
 c1 = (
     alt.Chart(monthly_adv_dec)
     .mark_line()
@@ -232,6 +246,8 @@ st.altair_chart(c_y, use_container_width=True)
 # Short Sell
 st.subheader("Short Sold Stocks")
 st.caption(f"Updated: {max(short_sell_arch['TIMESTAMP'])}")
+with st.expander("About short selling stocks"):
+    st.write("Short selling a stock is when a trader borrows shares from a broker and immediately sells them with the expectation that the share price will fall shortly after. If it does, the trader can buy the shares back at the lower price, return them to the broker, and keep the difference, minus any loan interest, as profit. For example: You borrow 10 shares of a company, then immediately sell them on the stock market for say Rs. 10 each, generating Rs. 100. If the price drops to Rs. 5 per share, you could use your Rs. 100 to buy back all 10 shares for only Rs. 50, then return the shares to the broker. In the end, you netted Rs. 50 on the short (minus any commissions, fees and interest).")
 st.scatter_chart(
     short_sell_arch,
     x="TIMESTAMP",
