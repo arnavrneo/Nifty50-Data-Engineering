@@ -3,6 +3,5 @@ venv/
 tf/terraform.tfstate
 tf/terraform.tfstate.backup
 python/
-files/
 processed/
 .streamlit/
