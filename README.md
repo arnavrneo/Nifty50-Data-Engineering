@@ -83,3 +83,23 @@ AWS recommends a layered architecture for S3 for data engineering workloads. Eac
 | -- | -- |
 | ![](assets/1.png) | ![](assets/2.png) |
 | ![](assets/3.png) | ![](assets/4.png) |
+
+## Project Setup
+
+To setup this project, follow the steps:
+
+1) Make sure that the `tf/0_providers.tf` has the correct info about your AWS. Also, ensure that the AWS creds are there in your system env variables.
+
+2) Run `terraform init` inside `tf` followed by `terraform apply`. It will setup the s3 buckets and the corresponding lambda functions and s3 event notifications.
+
+3) Create the data warehouse on Snowflake using the `sql` files present under `sql/` dir.
+
+4) Create a Role in AWS with access to the S3 bucket and replace the `Principal` and `sts:ExternalID` with the corresponding values from `DESC INTEGRATION aws_stage_data;` in Snowflake.
+
+5) Make sure to replace the `STORAGE_AWS_ROLE_ARN` and `STORAGE_ALLOWED_LOCATIONS` in `2_stage_creation.sql`.
+
+6) Note the Snowflake SQS pipe arn after running `SHOW PIPES;` in Snowflake and uncomment and replace the `queue_arn` in the terraform scripts under the S3 analytics bucket creation.
+
+7) Test by uploading the files with the correct format and naming, as specified in the S3 event notifications, to the S3 "Raw" bucket. The SQS pipe will automatically load the file inside the warehouse.
+
+8) To clean up the infrastructure, run `terraform destroy`.
