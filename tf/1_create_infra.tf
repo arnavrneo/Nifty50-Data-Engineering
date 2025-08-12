@@ -61,7 +61,7 @@ resource "aws_lambda_function" "s3_raw_lambda" {
 }
 
 resource "aws_s3_bucket" "raw" {
-  bucket = "nifty50-raw"
+  bucket = "nifty50-raw-1"
 
   tags = {
     Project = "data-engineering"
@@ -140,7 +140,7 @@ resource "aws_lambda_permission" "allow_processed_bucket" {
 }
 
 resource "aws_s3_bucket" "processed" {
-  bucket = "nifty50-processed"
+  bucket = "nifty50-processed-1"
 
   tags = {
     Project = "data-engineering"
@@ -198,59 +198,62 @@ resource "aws_s3_bucket_notification" "processed_bucket_notification" {
 
 # Analytics bucket
 resource "aws_s3_bucket" "analytics" {
-  bucket = "nifty50-analytics"
+  bucket = "nifty50-analytics-1"
 
   tags = {
     Project = "data-engineering"
   }
 }
 
+# IAM USER: arn:aws:iam::819481466467:user/e3t51000-s
+# IAM ROLE" arn:aws:iam::853463361791:role/snowflake-s3-access
+
 # Uncomment the following after creating snowflake SQS pipe
-## Replace the queue arn with the Snowflake SQS pipe arn 
-# resource "aws_s3_bucket_notification" "analytics_bucket_notification" {
-#   bucket = aws_s3_bucket.analytics.id
+# Replace the queue arn with the Snowflake SQS pipe arn 
+resource "aws_s3_bucket_notification" "analytics_bucket_notification" {
+  bucket = aws_s3_bucket.analytics.id
 
-#   queue {
-#     queue_arn = "placeholder" # replace here
-#     events              = ["s3:ObjectCreated:*"]
-#     filter_suffix       = "_block_deals_archives_analytics.csv"
-#   }
+  queue {
+    queue_arn = "arn:aws:sqs:us-east-1:819481466467:sf-snowpipe-AIDA35THG2ZRTUQA4IHCD-nSKT9gHPAs8K7g9aehjfoA" # replace here
+    events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = "_block_deals_archives_analytics.csv"
+  }
 
-#   queue {
-#     queue_arn = "placeholder" # replace here
-#     events              = ["s3:ObjectCreated:*"]
-#     filter_suffix       = "_board_meetings_analytics.csv"
-#   }
+  queue {
+    queue_arn = "arn:aws:sqs:us-east-1:819481466467:sf-snowpipe-AIDA35THG2ZRTUQA4IHCD-nSKT9gHPAs8K7g9aehjfoA" # replace here
+    events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = "_board_meetings_analytics.csv"
+  }
 
-#   queue {
-#     queue_arn = "placeholder" # replace here
-#     events              = ["s3:ObjectCreated:*"]
-#     filter_suffix       = "_bulk_deals_archives_analytics.csv"
-#   }
+  queue {
+    queue_arn = "arn:aws:sqs:us-east-1:819481466467:sf-snowpipe-AIDA35THG2ZRTUQA4IHCD-nSKT9gHPAs8K7g9aehjfoA" # replace here
+    events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = "_bulk_deals_archives_analytics.csv"
+  }
 
-#   queue {
-#     queue_arn = "placeholder" # replace here
-#     events              = ["s3:ObjectCreated:*"]
-#     filter_suffix       = "_monthly_adv_declines_analytics.csv"
-#   }
+  queue {
+    queue_arn = "arn:aws:sqs:us-east-1:819481466467:sf-snowpipe-AIDA35THG2ZRTUQA4IHCD-nSKT9gHPAs8K7g9aehjfoA" # replace here
+    events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = "_monthly_adv_declines_analytics.csv"
+  }
 
-#   queue {
-#     queue_arn = "placeholder" # replace here
-#     events              = ["s3:ObjectCreated:*"]
-#     filter_suffix       = "_nse_ratios_analytics.csv"
-#   }
+  queue {
+    queue_arn = "arn:aws:sqs:us-east-1:819481466467:sf-snowpipe-AIDA35THG2ZRTUQA4IHCD-nSKT9gHPAs8K7g9aehjfoA" # replace here
+    events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = "_nse_ratios_analytics.csv"
+  }
 
-#   queue {
-#     queue_arn = "placeholder" # replace here
-#     events              = ["s3:ObjectCreated:*"]
-#     filter_suffix       = "_sec_archives_analytics.csv"
-#   }
+  queue {
+    queue_arn = "arn:aws:sqs:us-east-1:819481466467:sf-snowpipe-AIDA35THG2ZRTUQA4IHCD-nSKT9gHPAs8K7g9aehjfoA" # replace here
+    events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = "_sec_archives_analytics.csv"
+  }
 
-#   queue {
-#     queue_arn = "placeholder" # replace here
-#     events              = ["s3:ObjectCreated:*"]
-#     filter_suffix       = "_short_selling_archives_analytics.csv"
-#   }
+  queue {
+    queue_arn = "arn:aws:sqs:us-east-1:819481466467:sf-snowpipe-AIDA35THG2ZRTUQA4IHCD-nSKT9gHPAs8K7g9aehjfoA" # replace here
+    events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = "_short_selling_archives_analytics.csv"
+  }
 
-#   depends_on = [aws_s3_bucket.analytics]
-# }
+  depends_on = [aws_s3_bucket.analytics]
+}
