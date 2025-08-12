@@ -5,8 +5,8 @@ CREATE or REPLACE STORAGE INTEGRATION aws_stage_data
     TYPE = EXTERNAL_STAGE
     STORAGE_PROVIDER = S3
     ENABLED = TRUE
-    STORAGE_AWS_ROLE_ARN = '<REPLACE-AWS-SNOWFLAKE-ROLE-HERE'
-    STORAGE_ALLOWED_LOCATIONS = ('<S3-ANALYTICS-BUCKET-URL>');
+    STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::853463361791:role/snowflake-s3-access'
+    STORAGE_ALLOWED_LOCATIONS = ('https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/');
 
 -- Describe the integration object
 -- Check Row 5 and Row 7
@@ -36,37 +36,37 @@ CREATE or REPLACE FILE FORMAT csv_load_format
 -- Create stage for each table
 CREATE or REPLACE STAGE stg_block_deals
 storage_integration = aws_stage_data
-url = '<S3-ANALYTICS-BUCKET-URL>/blockdealarch/'
+url = 'https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/blockdealarch/'
 file_format = csv_load_format;
 
 CREATE or REPLACE STAGE stg_board_meetings
 storage_integration = aws_stage_data
-url = '<S3-ANALYTICS-BUCKET-URL>/boardmeetings/'
+url = 'https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/boardmeetings/'
 file_format = csv_load_format;
 
 CREATE or REPLACE STAGE stg_bulk_deals
 storage_integration = aws_stage_data
-url = '<S3-ANALYTICS-BUCKET-URL>/bulkdealarch/'
+url = 'https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/bulkdealarch/'
 file_format = csv_load_format;
 
 CREATE or REPLACE STAGE stg_monthly_adv_dec
 storage_integration = aws_stage_data
-url = '<S3-ANALYTICS-BUCKET-URL>/monthlyadvdec/'
+url = 'https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/monthlyadvdec/'
 file_format = csv_load_format;
 
 CREATE or REPLACE STAGE stg_nse_ratios
 storage_integration = aws_stage_data
-url = '<S3-ANALYTICS-BUCKET-URL>/indexratios/'
+url = 'https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/indexratios/'
 file_format = csv_load_format;
 
 CREATE or REPLACE STAGE stg_sec_archives
 storage_integration = aws_stage_data
-url = '<S3-ANALYTICS-BUCKET-URL>/secarch/'
+url = 'https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/secarch/'
 file_format = csv_load_format;
 
 CREATE or REPLACE STAGE stg_short_sell_arch
 storage_integration = aws_stage_data
-url = '<S3-ANALYTICS-BUCKET-URL>/shortsellarch/'
+url = 'https://s3.us-east-1.amazonaws.com/nifty50-analytics-1/shortsellarch/'
 file_format = csv_load_format;
 
 -- List the data
